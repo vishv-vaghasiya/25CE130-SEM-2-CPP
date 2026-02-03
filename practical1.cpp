@@ -1,143 +1,136 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
 
-class bank_account {
+class bank_account
+{
     char Account_Holder_Name[200];
-    double Accn;
+    double Account_number;
     long double Account_balance;
 
 public:
-    void create_account();
+    void creat_account();
+    int search_account(double);
     void display_balance();
-    int search_acc(double);
-    void withdraw_money();
-    void deposit_money();
+    void widraw_money();
+    void deposite_money();
 };
 
-void bank_account::create_account() {
+void bank_account :: creat_account()
+{
     cin.ignore();
-    cout << "Enter account holder name: ";
-    cin.getline(Account_Holder_Name, 200);
-
-    cout << "Enter account number: ";
-    cin >> Accn;
-
-    cout << "Enter initial balance: ";
-    cin >> Account_balance;
-
-    cout << "Account created successfully!\n";
+    cout<<"Enter name : ";
+    cin.getline(Account_Holder_Name,200);
+    cout<<"Enter Account Number : ";
+    cin>>Account_number;
+    cout<<"Enter Account Balance : ";
+    cin>>Account_balance;
+}
+int bank_account::search_account(double acn)
+{
+    if(acn==Account_number)
+        return 1;
+    else
+        return 0;
 }
 
-void bank_account::display_balance() {
-    cout << "Name    : " << Account_Holder_Name << endl;
-    cout << "Balance : " << Account_balance << endl;
+void bank_account::deposite_money()
+{
+    double amount;
+    cout<<"Enter amount you want deposite : ";
+    cin>>amount;
+    Account_balance += amount;
 }
 
-int bank_account::search_acc(double id) {
-    return Accn == id;
+void bank_account::widraw_money()
+{
+    double wamount;
+    cout<<"Enter Amount to widraw : ";
+    cin>>wamount;
+    Account_balance -= wamount;
 }
 
-void bank_account::withdraw_money() {
-    long double amt;
-    cout << "Enter withdraw amount: ";
-    cin >> amt;
-
-    if (amt > Account_balance)
-        cout << "Insufficient balance\n";
-    else {
-        Account_balance -= amt;
-        cout << "Withdraw successful\n";
-    }
+void bank_account::display_balance()
+{
+    cout<<"Account Balance : "<<Account_balance<<endl;
 }
 
-void bank_account::deposit_money() {
-    long double amt;
-    cout << "Enter deposit amount: ";
-    cin >> amt;
-    Account_balance += amt;
-    cout << "Deposit successful\n";
-}
-
-int main() {
-    bank_account B[50];
-    int choice, account_count = 0;
-    double search_id;
+int main()
+{
+    class bank_account Accounts[15];
+    int choice,n=0,i;
+    double accountnumber;
 
 options:
-    cout << "\n1. Deposit";
-    cout << "\n2. Withdraw";
-    cout << "\n3. Check Balance";
-    cout << "\n4. Create Account";
-    cout << "\n5. Exit";
-    cout << "\nEnter choice: ";
-    cin >> choice;
+    cout<<"1.Deposite money"<<endl<<"2.Withdraw money"<<endl<<"3.Check Balance"<<endl<<"4.Create Account"<<endl<<"5.Exit"<<endl;
+    cout<<"Choose any option : ";
+    cin>>choice;
 
-    switch (choice) {
-
-    case 1: {
-        cout << "Enter account number: ";
-        cin >> search_id;
-        bool found = false;
-
-        for (int i = 0; i < account_count; i++) {
-            if (B[i].search_acc(search_id)) {
-                B[i].deposit_money();
-                found = true;
+    switch(choice)
+    {
+    case 1:
+        cout<<"Enter Account Number : ";
+        cin>>accountnumber;
+        for(i=0; i<n; i++)
+        {
+            if(Accounts[i].search_account(accountnumber)==1)
+            {
+                Accounts[i].deposite_money();
                 break;
             }
         }
-        if (!found)
-            cout << "Invalid Account Number\n";
+        if(i==n)
+        {
+            cout<<"invalid account number!"<<endl;
+        }
         goto options;
-    }
 
-    case 2: {
-        cout << "Enter account number: ";
-        cin >> search_id;
-        bool found = false;
-
-        for (int i = 0; i < account_count; i++) {
-            if (B[i].search_acc(search_id)) {
-                B[i].withdraw_money();
-                found = true;
+    case 2:
+        cout<<"Enter Account Number : ";
+        cin>>accountnumber;
+        for(i=0; i<n; i++)
+        {
+            if(Accounts[i].search_account(accountnumber)==1)
+            {
+                Accounts[i].widraw_money();
                 break;
             }
         }
-        if (!found)
-            cout << "Invalid Account Number\n";
+        if(i==n)
+        {
+            cout<<"invalid account number!";
+        }
         goto options;
-    }
 
-    case 3: {
-        cout << "Enter account number: ";
-        cin >> search_id;
-        bool found = false;
+    case 3:
 
-        for (int i = 0; i < account_count; i++) {
-            if (B[i].search_acc(search_id)) {
-                B[i].display_balance();
-                found = true;
+        cout<<"Enter Account Number : ";
+        cin>>accountnumber;
+        for(i=0; i<n; i++)
+        {
+            if(Accounts[i].search_account(accountnumber)==1)
+            {
+                Accounts[i].display_balance();
                 break;
             }
         }
-        if (!found)
-            cout << "Invalid Account Number\n";
+        if(i==n)
+        {
+            cout<<"invalid account number!";
+        }
         goto options;
-    }
 
     case 4:
-        if (account_count < 50)
-            B[account_count++].create_account();
-        else
-            cout << "Account limit reached\n";
+        Accounts[n].creat_account();
+        n++;
         goto options;
 
     case 5:
-        cout << "Thank you!\n";
+        cout<<"exiting.....";
         return 0;
 
     default:
-        cout << "Invalid choice\n";
-        goto options;
+        cout<<"Invalid Choice!";
     }
+
+    return 0;
 }
