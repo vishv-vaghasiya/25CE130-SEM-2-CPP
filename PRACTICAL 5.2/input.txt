@@ -1,0 +1,4 @@
+This is a sample text file.
+It contains multiple lines,
+and several words.
+Use this file to test the C++ program.
